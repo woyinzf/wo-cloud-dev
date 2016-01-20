@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ai.wocloud.bean.LoginInfo">
+	
+	<resultMap type="com.ai.wocloud.bean.LoginInfo" id="loginResult">
+		<result property="id" column="ID" />
+		<result property="loginName" column="DLM" />
+		<result property="loginType" column="DLLX" />
+		<result property="createTime" column="CJSJ" />
+		<result property="updateTime" column="XGSJ" />
+	</resultMap>
+
+	<resultMap type="com.ai.wocloud.bean.MessageVeryCodeDto" id="messageVeryCode">
+		<result property="veryCode" column="MESSAGE"/>
+		<result property="activeTime" column="ACTIVETIME"/>
+	</resultMap>
+	
+	<select id="login" parameterType="loginInfo" resultMap="loginResult" >
+		SELECT * FROM T_SIGN_INFO t
+			WHERE t.DLM = #{loginName} AND t.DLMM = #{loginPassword} AND t.YXBZ = '1'
+	</select>
+	
+	<select id="validationInfo" parameterType="loginInfo" resultMap="loginResult" >
+		SELECT * FROM T_SIGN_INFO t
+			WHERE t.DLM = #{loginName} AND t.DLMM = #{loginPassword}
+	</select>
+	
+	
+	<insert id="insertLoginInfo" parameterType="loginInfo">
+		INSERT INTO T_SIGN_INFO(ID, DLM, DLMM, DLLX, YXBZ, CJSJ, XGSJ)
+			VALUES(#{id}, #{loginName}, #{loginPassword}, #{loginType}, #{useful}, #{createTime}, #{updateTime})
+	</insert>
+	
+	<select id="userexistornot" parameterType="String" resultMap="loginResult" >
+		SELECT * FROM T_SIGN_INFO t
+			WHERE t.DLM = #{loginName}
+	</select>
+	
+	<select id="getMessageVeryCode" parameterType="String" resultMap="messageVeryCode">
+		SELECT ucs.MESSAGE, ucs.ACTIVETIME FROM UCS_MESSAGE ucs where ucs.TELNUMBER =#{phone} ORDER BY ucs.ACTIVETIME DESC LIMIT 0, 1
+	</select>
+	
+	<select id="oldPwdVery" parameterType="loginInfo" resultMap="loginResult" >
+		SELECT * FROM T_SIGN_INFO t
+			WHERE t.DLM = #{loginName} AND t.DLMM = #{loginPassword}
+	</select>
+	
+	<update id="pwdChange" parameterType="loginInfo">
+		UPDATE T_SIGN_INFO t SET t.DLMM= #{loginPassword} WHERE t.DLM = #{loginName}
+	</update>
+
+</mapper>

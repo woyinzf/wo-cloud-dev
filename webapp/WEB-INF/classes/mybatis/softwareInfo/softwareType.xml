@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.wocloud.bean.SoftwareType">
+	
+	<resultMap type="com.ai.wocloud.bean.SoftwareType" id="softwareTypeResult">
+		<result property="seqId" column="SEQ_ID" javaType="int" jdbcType="INTEGER"/>
+		<result property="serviceTypeId" column="SERVICE_TYPE_ID"/>
+		<result property="serviceTypeName" column="SERVICE_TYPE_NAME" />
+		
+		<result property="serviceTypeDesc" column="SERVICE_TYPE_DESC" />
+		<result property="fatherName" column="FATHER_NODE" />
+		<result property="isUsable" column="IS_USABLE" />
+		<result property="logo" column="LOGO" />
+		
+	</resultMap>
+	
+	<select id="findallsoftwaretype" parameterType="String" resultMap="softwareTypeResult">
+		select * from software_type
+	</select>
+	<select id="findonesoftwaretype" parameterType="String" resultMap="softwareTypeResult">
+		select * from software_type where SERVICE_TYPE_ID = #{id} 
+	</select>
+	
+         <select id="findsoftwaretypeByfather" parameterType="String" resultMap="softwareTypeResult">
+		select * from software_type where FATHER_NODE = #{father_node}
+	</select>
+
+</mapper>

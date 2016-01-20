@@ -1,0 +1,51 @@
+.myWrap {
+    display:none;
+	background-color:#fff;
+	border:1px solid #cccccc;
+    overflow:hidden;
+	margin: 0px;
+    padding: 0px;
+    font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"����";
+}
+.myWrap .myTi{
+	background:#00aef3;
+	height:45px;
+
+}
+
+.myTi{
+
+	height:36px;
+	line--height:36px;
+
+}
+.myWrap .myTi_l{
+	 font-family:"Microsoft YaHei";
+	display: block; 
+	position:relative;
+	float:left;	
+	color:#ffffff;	
+	font-size:16px;
+	text-indent:10px;
+    height:45px;
+    line-height:45px;
+	white-space:nowrap; 
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+}
+.myWrap .myTi_r{
+	position:relative;
+	float:right;
+	width:30px;
+	height:20px;
+	margin-top:14px;
+	cursor:pointer;
+}
+.myWrap .close_on{
+	background-image:url(../style/close2hover.png);
+	background-repeat:no-repeat;
+}
+.myWrap .close_out{
+	background-image:url(../style/close2.png);
+	background-repeat:no-repeat;
+}

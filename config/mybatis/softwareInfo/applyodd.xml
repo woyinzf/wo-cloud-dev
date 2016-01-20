@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.wocloud.bean.ApplyOdd">
+	
+	<resultMap type="com.ai.wocloud.bean.ApplyOdd" id="applyOddResult">
+		<result property="id" column="id" javaType="int" jdbcType="INTEGER"/>
+		<result property="softwareId" javaType="int" column="softId"/>
+		<result property="applyOddStatus" column="application_status" />
+		<result property="applyOddType" column="application_type" />
+		
+		<result property="applyOddSuggest" column="application_suggest" />
+		<result property="applyOddTime" column="application_time" />
+	</resultMap>
+	
+
+	
+	
+	<insert id="addapplyodd" parameterType="ApplyOdd">
+	 <![CDATA[
+		insert into
+		pm_application(softId,application_type,application_status,application_suggest,application_time) values
+		(#{softwareId},#{applyOddType},#{applyOddStatus},#{applyOddSuggest},#{applyOddTime})
+		]]>
+ 	</insert>
+ 	
+ 	<delete id="deleteApplyOdd" parameterType="Integer">
+ 		delete from pm_application where softId= #{id}
+ 	</delete>
+
+</mapper>

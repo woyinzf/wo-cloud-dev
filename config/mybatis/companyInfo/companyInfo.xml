@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ai.wocloud.bean.CompanyInfo">
+	
+	<resultMap type="com.ai.wocloud.bean.CompanyInfo" id="companyInfo">
+		<id property="id" column="ID"/>
+		<result property="loginId" column="DLID"/>
+		<result property="companyName" column="QYMC"/>
+		<result property="companyCode" column="QYZZDM"/>
+		<result property="companyAddress" column="QYDZ"/>
+		<result property="email" column="DZYJ"/>
+		<result property="mobilePhone" column="YDDH"/>
+		<result property="createTime" column="CJSJ"/>
+		<result property="updateTime" column="XGSJ"/>
+		<result property="peasonPicPath" column="FRDBP"/>
+		<result property="workPicPath" column="GZZZP"/>
+	</resultMap>
+	
+	<insert id="insertCompanyInfo" parameterType="companyInfo">
+		INSERT INTO T_BASE_INFO(ID, DLID, QYMC, QYZZDM, QYDZ, DZYJ, YDDH, YXBZ, CJSJ, XGSJ,FRDBP,GZZZP)
+			VALUES(#{id},  #{loginId}, #{companyName}, #{companyCode}, #{companyAddress}, #{email}, #{mobilePhone}, #{useful}, #{createTime}, #{updateTime},#{peasonPicPath},#{workPicPath})
+	</insert>
+	
+	<select id="phoneExistorNot" parameterType="Map" resultMap="companyInfo">
+		SELECT b.* FROM T_SIGN_INFO s,T_BASE_INFO b
+			 WHERE s.ID=b.DLID AND s.DLM=#{loginName} AND b.YDDH=#{phone} AND s.YXBZ='1'	
+	</select>
+	
+	<select id="enterpriseExistorNot" parameterType="String" resultMap="companyInfo">
+		SELECT b.* FROM T_BASE_INFO b
+			 WHERE  b.QYMC=#{enterpriseName} 	
+	</select>
+	
+	<select id="findCompanyInfoByLoginId" parameterType="loginInfo" resultMap="companyInfo">
+		SELECT * FROM T_BASE_INFO t
+			WHERE t.DLID = #{id}
+	</select>
+	
+	<update id="basicInfoEdit" parameterType="companyInfo">
+		UPDATE T_BASE_INFO t SET t.DZYJ= #{email} , t.YDDH=#{mobilePhone} WHERE t.DLID = #{loginId}
+	</update>
+	
+	
+
+</mapper>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.wocloud.bean.Software">
+	
+	<resultMap type="com.ai.wocloud.bean.Software" id="softwareResult">
+		<result property="id" column="id" javaType="int" jdbcType="INTEGER"/>
+		<result property="handleId" column="handle_id"/>
+		<result property="softwareName" column="software_name" />
+		<result property="softwareKind" column="software_kind" />
+		
+		<result property="softwareVersions" column="software_versions" />
+		<result property="commandTime" column="command_time" />
+		
+		<result property="softwareData" column="software_data" />
+		<result property="softwareStatus" column="software_status" />
+		
+		<result property="softwareOffer" column="software_offer" />
+		<result property="softwareType" column="software_type" />
+		
+		
+		<result property="operateSystem" column="operate_system" />
+		<result property="softwareIntroduce" column="software_introduce" />
+		
+		<result property="softwareImgUrl" column="software_img_url" />
+		<result property="softwareSpecificationUrl" column="software_specification_url" />
+		
+		<result property="softwareConfigSpecificationUrl" column="software_configSpecification_url" />
+		<result property="woCloudUserName" column="wo_cloud_user_name" />
+		
+		<result property="ghoName" column="GHO_name" />
+		<result property="softwareSellAuthorizationUrl" column="software_sellAuthorization_url" />
+		<result property="softwareId" column="software_id" />
+		
+		<result property="processType" column="process_type" />
+		<result property="softwareSellProportion" column="software_sell_proportion" />
+	</resultMap>
+	
+	<resultMap type="com.ai.wocloud.bean.ApplyInfo" id="applyResult">
+		<result property="applyId" column="id"/>
+		<result property="softId" column="software_id"/>
+		<result property="softName" column="software_name" />
+		<result property="softType" column="software_type" />		
+		<result property="softVersion" column="software_versions" />
+		<result property="applyTime" column="application_time" />		
+		<result property="applyStatus" column="application_status" />	
+		<result property="applyType" column="application_type"/>
+	</resultMap>
+	
+	<resultMap type="com.ai.wocloud.bean.ApplyBasic" id="applyBasicResult">
+		<result property="applyId" column="id"/>	
+		<result property="applyStatus" column="application_status" />	
+		<result property="applyType" column="application_type"/>
+	</resultMap>
+	
+	<select id="queryHistoryId" resultType="int" parameterType="String">
+		select sah.id from soft_application_his sah where sah.software_id = #{softwareId}
+	</select>
+	
+	<select id="findsoftwarebysplitpage" resultMap="softwareResult" parameterType="map">
+		
+			select a.* from pm_software a left join software_type b on a.software_type=b.service_type_id left join software_status c on a.software_status=c.status_id where a.handle_id=#{userId} 
+			<if test="condValue !=null and condValue !=''">
+			 	and (a.software_name like "%"#{condValue}"%" or a.software_versions like "%"#{condValue}"%" or a.command_time like "%"#{condValue}"%" or b.service_type_name like "%"#{condValue}"%" or c.status_name like "%"#{condValue}"%")
+			 </if>
+			<if test="orderCond !=null and orderCond !=''">
+			 	order by ${orderCond}
+			 </if>
+			 <if test="orderType !=null and orderType !=''">
+			 	${orderType}
+			 </if>
+			limit #{startRow},#{rowCount}
+	
+	</select>
+	
+	
+	
+	
+	<insert id="insertSoftware" parameterType="Software">
+	 <![CDATA[
+		insert into
+		pm_software(handle_id,software_name,software_kind,software_versions,command_time,
+		software_data,software_status,software_offer,software_type,operate_system,software_introduce,
+		software_img_url,software_specification_url,software_configSpecification_url,
+		wo_cloud_user_name,GHO_name,software_sellAuthorization_url,software_id,process_type,software_sell_proportion) values
+		(#{handleId},#{softwareName},#{softwareKind},#{softwareVersions},#{commandTime},
+		#{softwareData},#{softwareStatus},#{softwareOffer},#{softwareType},#{operateSystem},
+		#{softwareIntroduce},#{softwareImgUrl},#{softwareSpecificationUrl},#{softwareConfigSpecificationUrl},
+		#{woCloudUserName},#{ghoName},#{softwareSellAuthorizationUrl},#{softwareId},#{processType},#{softwareSellProportion})
+		]]>
+ 	</insert>
+ 	
+ 	<insert id="insertSoftwareHis" parameterType="Software">
+	 <![CDATA[
+		insert into
+		soft_application_his(handle_id,software_name,software_kind,software_versions,command_time,
+		software_data,software_status,software_offer,software_type,operate_system,software_introduce,
+		software_img_url,software_specification_url,software_configSpecification_url,
+		wo_cloud_user_name,GHO_name,software_sellAuthorization_url,software_id,process_type,software_sell_proportion,pm_software_id) values
+		(#{handleId},#{softwareName},#{softwareKind},#{softwareVersions},#{commandTime},
+		#{softwareData},#{softwareStatus},#{softwareOffer},#{softwareType},#{operateSystem},
+		#{softwareIntroduce},#{softwareImgUrl},#{softwareSpecificationUrl},#{softwareConfigSpecificationUrl},
+		#{woCloudUserName},#{ghoName},#{softwareSellAuthorizationUrl},#{softwareId},#{processType},#{softwareSellProportion},#{id})
+		]]>
+ 	</insert>
+ 	
+ 	<update id="updateSoftware" parameterType="Software">
+		update pm_software set
+		handle_id=#{handleId},software_name=#{softwareName},software_kind=#{softwareKind}
+		,software_versions=#{softwareVersions},command_time=#{commandTime},
+		software_data=#{softwareData},software_status=#{softwareStatus},software_offer=#{softwareOffer},
+		software_type=#{softwareType},operate_system=#{operateSystem},
+		software_introduce=#{softwareIntroduce},software_img_url=#{softwareImgUrl},
+		software_specification_url=#{softwareSpecificationUrl},software_configSpecification_url= #{softwareConfigSpecificationUrl},
+		wo_cloud_user_name=#{woCloudUserName},GHO_name=#{ghoName},
+		software_sellAuthorization_url=#{softwareSellAuthorizationUrl},software_id=#{softwareId},process_type=#{processType},
+		software_sell_proportion=#{softwareSellProportion}   where id=#{id}
+ 	</update>
+ 	
+ 	<update id="resetSoftware" parameterType="int">
+ 		update pm_software a ,(select  c.* from soft_application_his c,pm_application d where c.id=d.softId and c.pm_software_id=#{selectId} and d.application_status='1' order by c.id DESC limit 0,1) b
+		set
+		a.handle_id=b.handle_id,a.software_name=b.software_name,a.software_kind=b.software_kind,
+		a.software_versions=b.software_versions,a.command_time=b.command_time,
+		a.software_data=b.software_data,a.software_status='6',a.software_offer=b.software_offer,
+		a.software_type=b.software_type,a.operate_system=b.operate_system,
+		a.software_introduce=b.software_introduce,a.software_img_url=b.software_img_url,
+		a.software_specification_url=b.software_specification_url,a.software_configSpecification_url= b.software_configSpecification_url,
+		a.wo_cloud_user_name=b.wo_cloud_user_name,a.GHO_name=b.GHO_name,
+		a.software_sellAuthorization_url=b.software_sellAuthorization_url,a.software_id=b.software_id,a.process_type=b.process_type,
+		a.software_sell_proportion=b.software_sell_proportion
+		where a.id=#{selectId}
+ 	</update>
+ 	
+ 	<update id="updateSoftwareByid" parameterType="int">
+ 		update pm_software set software_status=2 where id=#{id}
+ 	</update>
+ 	<delete id="deleteSoftware"  parameterType="int">
+ 		delete from pm_software where id= #{id}
+ 	</delete>
+ 	
+	<select id="findSoftwareByid"  parameterType="int" resultMap="softwareResult">
+		select * from pm_software
+		where id=#{id}
+	</select>
+	
+	<select id="findSoftwareBysoftwareId"  parameterType="String" resultMap="softwareResult">
+		select * from pm_software 
+		where software_id=#{softwareId}
+	</select>
+	
+	<select id="findSoftwareByid2"  parameterType="int" resultMap="softwareResult">
+		select * from soft_application_his
+		where id=#{id}
+	</select>
+	
+	<select id="findSoftwareBysoftwareId2"  parameterType="String" resultMap="softwareResult">
+		select * from soft_application_his 
+		where software_id=#{softwareId}
+	</select>
+	
+	<select id="findAllSoftware" parameterType="Map" resultMap="softwareResult">
+		select a.* from pm_software a left join software_type b on a.software_type=b.service_type_id left join software_status c on a.software_status=c.status_id where a.handle_id=#{userId} 
+		<if test="condValue !=null and condValue !=''">
+			 and (a.software_name like "%"#{condValue}"%" or a.software_versions like "%"#{condValue}"%" or a.command_time like "%"#{condValue}"%" or b.service_type_name like "%"#{condValue}"%" or c.status_name like "%"#{condValue}"%")
+		 </if>
+	</select>
+	
+	<select id="findSoftwareBySoftwareName" parameterType="String" resultMap="softwareResult">
+		select * from pm_software where software_name = #{softwareName}
+	</select>
+	
+	<select id="findSoftwareBySoftwareType" parameterType="String" resultMap="softwareResult">
+		select * from pm_software where software_type = #{softwareKind}
+	</select>
+	
+	<select id="findSoftwareBySoftwareVersions" parameterType="String" resultMap="softwareResult">
+		select * from pm_software where software_versions = #{softwareVersions}
+	</select>
+	<select id="findSoftwareBySoftewareCommandTime" parameterType="String" resultMap="softwareResult">
+		select * from pm_software where command_time = #{commandTime}
+	</select>
+	<select id="findSoftwareByKeywords" parameterType="String" resultMap="softwareResult">
+		elect * from pm_software where software_name like %#{softwareName}%
+	</select>
+	<update id="softDown" parameterType="software">
+		UPDATE PM_SOFTWARE p SET p.software_status= '8' WHERE p.id= #{id}
+	</update>	
+	<update id="softSign" parameterType="software">
+		UPDATE PM_SOFTWARE p SET p.software_status= '1' WHERE p.id= #{id}
+	</update>
+	<select id="sumMyApply" parameterType="Map" resultMap="softwareResult">
+		select b.* from pm_application a left join  soft_application_his b on a.softId=b.id where b.handle_id = #{userId}
+		<if test="softName != null and softName != ''">
+			and b.software_name like "%"#{softName}"%"
+		</if>
+		<if test="appStatus !=null and appStatus !=''">
+			and a.application_status=#{appStatus}
+		</if>
+		<if test="startDate !=null and startDate !=''">
+		 <![CDATA[ 
+			and date_format(a.application_time,'%Y-%m-%d') >= #{startDate}
+			]]> 
+		</if>
+		<if test="endDate !=null and endDate !=''">
+		 <![CDATA[ 
+			and date_format(a.application_time,'%Y-%m-%d') <= #{endDate}
+			]]> 
+		</if>
+	</select>
+	
+	<select id="findMyApply" parameterType="Map" resultMap="applyResult">
+		select a.id id,a.application_type application_type,b.id software_id,b.software_name software_name,c.service_type_name software_type,b.software_versions software_versions,a.application_time application_time,a.application_status application_status from pm_application a left join soft_application_his b on a.softId=b.id left join software_type c on b.software_type=c.service_type_id where b.handle_id=#{userId}
+		<if test="softName != null and softName != ''">
+			and b.software_name like "%"#{softName}"%"
+		</if>
+		<if test="appStatus !=null and appStatus !=''">
+			and a.application_status=#{appStatus}
+		</if>
+		<if test="startDate !=null and startDate !=''">
+		 <![CDATA[ 
+			and date_format(a.application_time,'%Y-%m-%d') >= #{startDate}
+			]]> 
+		</if>
+		<if test="endDate !=null and endDate !=''">
+		 <![CDATA[ 
+			and date_format(a.application_time,'%Y-%m-%d') <= #{endDate}
+			]]> 
+		</if>		 
+		 <if test="orderCond !=null and orderCond !=''">
+		 	order by ${orderCond}
+		 </if>
+		 <if test="orderType !=null and orderType !=''">
+		 	${orderType}
+		 </if>
+		 limit #{startRow},#{pageSize}
+	</select>
+	
+	<select id="applyBasic" parameterType="String" resultMap="applyBasicResult">
+		select id,application_status,application_type from pm_application where id=#{applyId};	
+	</select>
+	
+	<select id="upSoftNum" parameterType="String" resultMap="softwareResult">
+		select * from pm_software where handle_id=#{userId} and (software_status='6' or process_type in ('2','3','4'))	
+	</select>
+	<select id="getCustId" parameterType="String" resultType="String">
+		SELECT customer_id FROM ucs_customer where LOGIN_NAME = #{userName};
+	</select>	
+</mapper>

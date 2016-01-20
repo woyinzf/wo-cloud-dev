@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="loginInfo" type="com.ai.wocloud.bean.LoginInfo"/>
+		<typeAlias alias="companyInfo" type="com.ai.wocloud.bean.CompanyInfo"/>
+		<typeAlias alias="Software" type="com.ai.wocloud.bean.Software"/>
+		<typeAlias alias="ApplyOdd" type="com.ai.wocloud.bean.ApplyOdd"/>
+		<typeAlias alias="Vminfo" type="com.ai.wocloud.bean.VmInfo"/>
+		<typeAlias alias="SoftwareType" type="com.ai.wocloud.bean.SoftwareType"/>
+		<typeAlias alias="PrtyConfig" type="com.ai.wocloud.bean.PrtyConfig"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="mybatis/loginInfo/loginInfo.xml" />
+		<mapper resource="mybatis/companyInfo/companyInfo.xml" />
+		<mapper resource="mybatis/softwareInfo/software.xml" />
+		<mapper resource="mybatis/softwareInfo/applyodd.xml" />
+		<mapper resource="mybatis/softwareInfo/vminfo.xml" />
+		<mapper resource="mybatis/softwareInfo/softwareType.xml" />
+		<mapper resource="mybatis/softwareInfo/prtyconfig.xml" />
+	</mappers>
+</configuration>	
