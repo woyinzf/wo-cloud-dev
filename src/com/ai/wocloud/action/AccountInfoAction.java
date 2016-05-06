@@ -38,6 +38,7 @@ public class AccountInfoAction extends BaseAction{
 	//-------------------------跳转至账户总额
     @RequestMapping("/toAccountTotal")
     public String toAccountTotal(HttpServletRequest request){ 
+    	System.out.println("123456");
     	JSONObject json = new JSONObject();
     	String userId=SessionInfo.getLoginInfo(request).getLoginName();
     	
