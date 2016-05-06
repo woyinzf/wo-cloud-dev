@@ -75,6 +75,7 @@ public class ApplyOddAction extends BaseAction {
 	@SuppressWarnings("unchecked")
     @RequestMapping(value = "/addApplyOdd")
 	public void addApplyOdd(Software software,HttpServletRequest request, HttpServletResponse response){
+		System.out.println("test 456789");
 		String userId=SessionInfo.getLoginInfo(request).getLoginName();
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String dateStr = dateformat.format(new Date());
