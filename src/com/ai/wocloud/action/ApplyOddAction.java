@@ -77,7 +77,7 @@ public class ApplyOddAction extends BaseAction {
 	public void addApplyOdd(Software software,HttpServletRequest request, HttpServletResponse response){
 		System.out.println("test 123456");
 		System.out.println("test 3331");
-		System.out.println("test ccc");
+		System.out.println("test tttttttt");
 		String userId=SessionInfo.getLoginInfo(request).getLoginName();
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String dateStr = dateformat.format(new Date());
