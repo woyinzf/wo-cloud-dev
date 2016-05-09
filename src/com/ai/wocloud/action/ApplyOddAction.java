@@ -86,7 +86,7 @@ public class ApplyOddAction extends BaseAction {
 		JSONObject json = new JSONObject();
 		String POST_URL="";
 		List<String> fileName = new ArrayList<String>();
-		System.out.println("test 888888888");
+		System.out.println("test 666666666666");
 		try {
 			POST_URL = GetInterfacesUrlUtils.getInterfacesUrl("vmUrl");
 		} catch (Exception e) {
